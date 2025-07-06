@@ -1,0 +1,19 @@
+{
+  "name": "project_api_sewasepeda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^4.21.2",
+    "midtrans-client": "^1.4.2",
+    "multer": "^1.4.5-lts.2",
+    "mysql": "^2.18.1"
+  }
+}
