@@ -62,71 +62,6 @@ const getAllUsers = (req, res) => {
     });
 };
 
-// Tambah fungsi untuk registrasi user baru
-const register = (req, res) => {
-    const { username, password, level } = req.body;
-
-    // Validasi input
-    if (!username || !password) {
-        return res.status(400).json({
-            status: false,
-            message: 'Username dan password harus diisi'
-        });
-    }
-
-    // Set level default jika tidak diisi
-    const userLevel = level || 'user';
-
-    // Validasi level
-    if (!['admin', 'user'].includes(userLevel)) {
-        return res.status(400).json({
-            status: false,
-            message: 'Level harus admin atau user'
-        });
-    }
-
-    // Query untuk cek username sudah ada atau belum
-    const checkQuery = 'SELECT id FROM users WHERE username = ?';
-    db.query(checkQuery, [username], (err, results) => {
-        if (err) {
-            return res.status(500).json({
-                status: false,
-                message: 'Error database',
-                error: err
-            });
-        }
-
-        if (results.length > 0) {
-            return res.status(400).json({
-                status: false,
-                message: 'Username sudah digunakan'
-            });
-        }
-
-        // Query untuk insert user baru
-        const insertQuery = 'INSERT INTO users (username, password, level) VALUES (?, ?, ?)';
-        db.query(insertQuery, [username, password, userLevel], (err, results) => {
-            if (err) {
-                return res.status(500).json({
-                    status: false,
-                    message: 'Error database',
-                    error: err
-                });
-            }
-
-            return res.status(201).json({
-                status: true,
-                message: 'Registrasi berhasil',
-                data: {
-                    id: results.insertId,
-                    username,
-                    level: userLevel
-                }
-            });
-        });
-    });
-};
-
 const getUserById = (req, res) => {
     const { id } = req.params;
 
@@ -214,7 +149,6 @@ const updatePassword = (req, res) => {
 module.exports = {
     login,
     getAllUsers,
-    register,
     getUserById,
     updatePassword
 };

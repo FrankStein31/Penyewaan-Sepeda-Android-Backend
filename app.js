@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const cors = require('cors');
+const path = require('path');
+const multer = require('multer');
 const testRoutes = require('./routes/testRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 const registerRoutes = require('./routes/registerRoutes');
@@ -10,9 +13,27 @@ const rentalRoutes = require('./routes/rentalRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const simulationRoutes = require('./routes/simulationRoutes');
 
-// Middleware untuk parsing JSON
+// Middleware untuk CORS
+app.use(cors());
+
+// Middleware untuk parsing JSON dan form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Buat folder uploads jika belum ada
+const fs = require('fs');
+const uploadDir = path.join(__dirname, 'uploads');
+const ktpDir = path.join(uploadDir, 'ktp');
+
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir);
+}
+if (!fs.existsSync(ktpDir)) {
+    fs.mkdirSync(ktpDir);
+}
+
+// Middleware untuk serve static files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
 app.use('/api', testRoutes);
