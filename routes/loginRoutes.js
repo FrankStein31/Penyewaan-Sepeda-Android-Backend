@@ -1,10 +1,13 @@
 const express = require('express');
+const path = require('path');
 const router = express.Router();
-const { login, getAllUsers, getUserById, updatePassword } = require('../controllers/loginController');
+const { login, getUserById, updateProfile } = require('../controllers/loginController');
 
 router.post('/login', login);
-router.get('/users', getAllUsers);  // Idealnya ditambah middleware untuk cek admin
-router.get('/users/:id', getUserById);  // Endpoint untuk mendapatkan user by ID
-router.put('/users/:id/password', updatePassword);  // Endpoint untuk update password
+router.get('/users/:id', getUserById);
+router.put('/users/:id/profile', updateProfile);
+
+// Serve KTP images
+router.use('/uploads/ktp', express.static(path.join(__dirname, '../uploads/ktp')));
 
 module.exports = router;
