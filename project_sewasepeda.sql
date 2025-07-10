@@ -50,142 +50,12 @@ CREATE TABLE `notifications` (
   KEY `rental_id` (`rental_id`),
   CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `notifications_ibfk_2` FOREIGN KEY (`rental_id`) REFERENCES `rentals` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=160 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `notifications` */
 
 insert  into `notifications`(`id`,`user_id`,`rental_id`,`title`,`message`,`type`,`is_read`,`created_at`) values 
-(29,16,96,'Waktu Sewa Akan Habis','Sewa qq akan berakhir dalam 8 menit. Mohon segera kembalikan untuk menghindari denda.','warning',0,'2025-07-09 20:11:22'),
-(30,16,96,'Waktu Sewa Akan Habis','Sewa qq akan berakhir dalam 7 menit. Mohon segera kembalikan untuk menghindari denda.','warning',0,'2025-07-09 20:12:22'),
-(31,16,96,'Waktu Sewa Akan Habis','Sewa qq akan berakhir dalam 6 menit. Mohon segera kembalikan untuk menghindari denda.','warning',0,'2025-07-09 20:13:22'),
-(32,16,96,'Waktu Sewa Akan Habis','Sewa qq akan berakhir dalam 5 menit. Mohon segera kembalikan untuk menghindari denda.','warning',0,'2025-07-09 20:14:22'),
-(33,16,96,'Waktu Sewa Akan Habis','Sewa qq akan berakhir dalam 4 menit. Mohon segera kembalikan untuk menghindari denda.','warning',0,'2025-07-09 20:15:22'),
-(34,16,96,'Waktu Sewa Akan Habis','Sewa qq akan berakhir dalam 3 menit. Mohon segera kembalikan untuk menghindari denda.','warning',0,'2025-07-09 20:16:22'),
-(35,16,96,'Waktu Sewa Akan Habis','Sewa qq akan berakhir dalam 2 menit. Mohon segera kembalikan untuk menghindari denda.','warning',0,'2025-07-09 20:17:22'),
-(36,16,96,'Waktu Sewa Akan Habis','Sewa qq akan berakhir dalam 1 menit. Mohon segera kembalikan untuk menghindari denda.','warning',0,'2025-07-09 20:18:22'),
-(37,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 0 menit. Denda: Rp0','late',0,'2025-07-09 20:20:22'),
-(38,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1 menit. Denda: Rp11','late',0,'2025-07-09 20:21:22'),
-(39,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 2 menit. Denda: Rp11','late',0,'2025-07-09 20:22:22'),
-(40,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 3 menit. Denda: Rp11','late',0,'2025-07-09 20:23:22'),
-(41,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 937 menit. Denda: Rp2068','late',0,'2025-07-10 11:57:25'),
-(42,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 938 menit. Denda: Rp2068','late',0,'2025-07-10 11:58:25'),
-(43,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 939 menit. Denda: Rp2068','late',0,'2025-07-10 11:59:25'),
-(44,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 940 menit. Denda: Rp2068','late',0,'2025-07-10 12:00:25'),
-(45,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 941 menit. Denda: Rp2079','late',0,'2025-07-10 12:01:25'),
-(46,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 944 menit. Denda: Rp2079','late',0,'2025-07-10 12:04:41'),
-(47,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 945 menit. Denda: Rp2079','late',0,'2025-07-10 12:05:41'),
-(48,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 946 menit. Denda: Rp2090','late',0,'2025-07-10 12:06:41'),
-(49,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 947 menit. Denda: Rp2090','late',0,'2025-07-10 12:07:41'),
-(50,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 948 menit. Denda: Rp2090','late',0,'2025-07-10 12:08:41'),
-(51,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 949 menit. Denda: Rp2090','late',0,'2025-07-10 12:09:41'),
-(52,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 950 menit. Denda: Rp2090','late',0,'2025-07-10 12:10:41'),
-(53,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 951 menit. Denda: Rp2101','late',0,'2025-07-10 12:11:41'),
-(54,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 952 menit. Denda: Rp2101','late',0,'2025-07-10 12:12:41'),
-(55,17,NULL,'Akun Di-blacklist','Akun Anda telah di-blacklist dengan alasan: gabut','system',0,'2025-07-10 12:13:35'),
-(56,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 953 menit. Denda: Rp2101','late',0,'2025-07-10 12:13:41'),
-(57,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 954 menit. Denda: Rp2101','late',0,'2025-07-10 12:14:41'),
-(58,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 955 menit. Denda: Rp2101','late',0,'2025-07-10 12:15:41'),
-(59,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 956 menit. Denda: Rp2112','late',0,'2025-07-10 12:16:41'),
-(60,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 957 menit. Denda: Rp2112','late',0,'2025-07-10 12:17:41'),
-(61,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 958 menit. Denda: Rp2112','late',0,'2025-07-10 12:18:41'),
-(62,17,NULL,'Blacklist Dihapus','Akun Anda telah dihapus dari daftar blacklist','system',0,'2025-07-10 12:19:37'),
-(63,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 959 menit. Denda: Rp2112','late',0,'2025-07-10 12:19:41'),
-(64,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 960 menit. Denda: Rp2112','late',0,'2025-07-10 12:20:41'),
-(65,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 961 menit. Denda: Rp2123','late',0,'2025-07-10 12:21:41'),
-(66,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 962 menit. Denda: Rp2123','late',0,'2025-07-10 12:22:41'),
-(67,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 963 menit. Denda: Rp2123','late',0,'2025-07-10 12:23:41'),
-(68,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 964 menit. Denda: Rp2123','late',0,'2025-07-10 12:24:41'),
-(69,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 965 menit. Denda: Rp2123','late',0,'2025-07-10 12:25:41'),
-(70,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 966 menit. Denda: Rp2134','late',0,'2025-07-10 12:26:41'),
-(71,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 967 menit. Denda: Rp2134','late',0,'2025-07-10 12:27:41'),
-(72,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 968 menit. Denda: Rp2134','late',0,'2025-07-10 12:28:41'),
-(73,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 969 menit. Denda: Rp2134','late',0,'2025-07-10 12:29:41'),
-(74,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 970 menit. Denda: Rp2134','late',0,'2025-07-10 12:30:41'),
-(75,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 971 menit. Denda: Rp2145','late',0,'2025-07-10 12:31:41'),
-(76,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 972 menit. Denda: Rp2145','late',0,'2025-07-10 12:32:41'),
-(77,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 973 menit. Denda: Rp2145','late',0,'2025-07-10 12:33:41'),
-(78,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 974 menit. Denda: Rp2145','late',0,'2025-07-10 12:34:41'),
-(79,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 975 menit. Denda: Rp2145','late',0,'2025-07-10 12:35:41'),
-(80,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 976 menit. Denda: Rp2156','late',0,'2025-07-10 12:36:41'),
-(81,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 977 menit. Denda: Rp2156','late',0,'2025-07-10 12:37:41'),
-(82,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 978 menit. Denda: Rp2156','late',0,'2025-07-10 12:38:41'),
-(83,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 979 menit. Denda: Rp2156','late',0,'2025-07-10 12:39:41'),
-(84,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 980 menit. Denda: Rp2156','late',0,'2025-07-10 12:40:41'),
-(85,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 981 menit. Denda: Rp2167','late',0,'2025-07-10 12:41:41'),
-(86,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 982 menit. Denda: Rp2167','late',0,'2025-07-10 12:42:41'),
-(87,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 983 menit. Denda: Rp2167','late',0,'2025-07-10 12:43:41'),
-(88,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 984 menit. Denda: Rp2167','late',0,'2025-07-10 12:44:41'),
-(89,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 985 menit. Denda: Rp2167','late',0,'2025-07-10 12:45:41'),
-(90,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 986 menit. Denda: Rp2178','late',0,'2025-07-10 12:46:41'),
-(91,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 987 menit. Denda: Rp2178','late',0,'2025-07-10 12:47:41'),
-(92,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 988 menit. Denda: Rp2178','late',0,'2025-07-10 12:48:41'),
-(93,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 989 menit. Denda: Rp2178','late',0,'2025-07-10 12:49:41'),
-(94,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 990 menit. Denda: Rp2178','late',0,'2025-07-10 12:50:41'),
-(95,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 991 menit. Denda: Rp2189','late',0,'2025-07-10 12:51:41'),
-(96,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 992 menit. Denda: Rp2189','late',0,'2025-07-10 12:52:41'),
-(97,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 993 menit. Denda: Rp2189','late',0,'2025-07-10 12:53:41'),
-(98,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 994 menit. Denda: Rp2189','late',0,'2025-07-10 12:54:41'),
-(99,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 995 menit. Denda: Rp2189','late',0,'2025-07-10 12:55:41'),
-(100,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 996 menit. Denda: Rp2200','late',0,'2025-07-10 12:56:41'),
-(101,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 997 menit. Denda: Rp2200','late',0,'2025-07-10 12:57:41'),
-(102,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 998 menit. Denda: Rp2200','late',0,'2025-07-10 12:58:41'),
-(103,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1000 menit. Denda: Rp2200','late',0,'2025-07-10 13:01:01'),
-(104,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1001 menit. Denda: Rp2211','late',0,'2025-07-10 13:02:01'),
-(105,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1002 menit. Denda: Rp2211','late',0,'2025-07-10 13:03:01'),
-(106,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1003 menit. Denda: Rp2211','late',0,'2025-07-10 13:04:01'),
-(107,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1004 menit. Denda: Rp2211','late',0,'2025-07-10 13:05:01'),
-(108,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1008 menit. Denda: Rp2222','late',0,'2025-07-10 13:08:42'),
-(109,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1009 menit. Denda: Rp2222','late',0,'2025-07-10 13:09:42'),
-(110,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1043 menit. Denda: Rp2299','late',0,'2025-07-10 13:43:37'),
-(111,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1044 menit. Denda: Rp2299','late',0,'2025-07-10 13:44:37'),
-(112,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1045 menit. Denda: Rp2299','late',0,'2025-07-10 13:45:37'),
-(113,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1046 menit. Denda: Rp2310','late',0,'2025-07-10 13:46:37'),
-(114,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1047 menit. Denda: Rp2310','late',0,'2025-07-10 13:47:37'),
-(115,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1048 menit. Denda: Rp2310','late',0,'2025-07-10 13:48:37'),
-(116,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1049 menit. Denda: Rp2310','late',0,'2025-07-10 13:49:37'),
-(117,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1050 menit. Denda: Rp2310','late',0,'2025-07-10 13:50:48'),
-(118,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1051 menit. Denda: Rp2321','late',0,'2025-07-10 13:51:48'),
-(119,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1052 menit. Denda: Rp2321','late',0,'2025-07-10 13:52:48'),
-(120,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1053 menit. Denda: Rp2321','late',0,'2025-07-10 13:53:48'),
-(121,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1054 menit. Denda: Rp2321','late',0,'2025-07-10 13:54:48'),
-(122,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1055 menit. Denda: Rp2321','late',0,'2025-07-10 13:56:18'),
-(123,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1056 menit. Denda: Rp2332','late',0,'2025-07-10 13:57:17'),
-(124,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1057 menit. Denda: Rp2332','late',0,'2025-07-10 13:58:17'),
-(125,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1058 menit. Denda: Rp2332','late',0,'2025-07-10 13:59:17'),
-(126,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1059 menit. Denda: Rp2332','late',0,'2025-07-10 14:00:17'),
-(127,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1060 menit. Denda: Rp2332','late',0,'2025-07-10 14:01:17'),
-(128,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1061 menit. Denda: Rp2343','late',0,'2025-07-10 14:02:17'),
-(129,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1062 menit. Denda: Rp2343','late',0,'2025-07-10 14:03:17'),
-(130,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1063 menit. Denda: Rp2343','late',0,'2025-07-10 14:04:17'),
-(131,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1064 menit. Denda: Rp2343','late',0,'2025-07-10 14:05:17'),
-(132,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1065 menit. Denda: Rp2343','late',0,'2025-07-10 14:06:17'),
-(133,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1066 menit. Denda: Rp2354','late',0,'2025-07-10 14:07:17'),
-(134,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1067 menit. Denda: Rp2354','late',0,'2025-07-10 14:08:17'),
-(135,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1068 menit. Denda: Rp2354','late',0,'2025-07-10 14:09:17'),
-(136,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1069 menit. Denda: Rp2354','late',0,'2025-07-10 14:10:17'),
-(137,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1070 menit. Denda: Rp2354','late',0,'2025-07-10 14:11:17'),
-(138,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1071 menit. Denda: Rp2365','late',0,'2025-07-10 14:12:17'),
-(139,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1076 menit. Denda: Rp2376','late',0,'2025-07-10 14:16:55'),
-(140,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1077 menit. Denda: Rp2376','late',0,'2025-07-10 14:17:55'),
-(141,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1078 menit. Denda: Rp2376','late',0,'2025-07-10 14:18:55'),
-(142,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1079 menit. Denda: Rp2376','late',0,'2025-07-10 14:19:55'),
-(143,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1080 menit. Denda: Rp2376','late',0,'2025-07-10 14:20:55'),
-(144,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1081 menit. Denda: Rp2387','late',0,'2025-07-10 14:21:55'),
-(145,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1082 menit. Denda: Rp2387','late',0,'2025-07-10 14:22:55'),
-(146,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1102 menit. Denda: Rp2431','late',0,'2025-07-10 14:42:36'),
-(147,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1103 menit. Denda: Rp2431','late',0,'2025-07-10 14:43:36'),
-(148,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1104 menit. Denda: Rp2431','late',0,'2025-07-10 14:44:36'),
-(149,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1105 menit. Denda: Rp2431','late',0,'2025-07-10 14:45:36'),
-(150,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1106 menit. Denda: Rp2442','late',0,'2025-07-10 14:46:36'),
-(151,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1107 menit. Denda: Rp2442','late',0,'2025-07-10 14:47:36'),
-(152,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1108 menit. Denda: Rp2442','late',0,'2025-07-10 14:48:36'),
-(153,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1109 menit. Denda: Rp2442','late',0,'2025-07-10 14:49:36'),
-(154,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1110 menit. Denda: Rp2442','late',0,'2025-07-10 14:50:36'),
-(155,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1111 menit. Denda: Rp2453','late',0,'2025-07-10 14:51:36'),
-(156,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1112 menit. Denda: Rp2453','late',0,'2025-07-10 14:52:36'),
-(157,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1113 menit. Denda: Rp2453','late',0,'2025-07-10 14:53:36'),
-(158,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1114 menit. Denda: Rp2453','late',0,'2025-07-10 14:54:36'),
-(159,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1115 menit. Denda: Rp2453','late',0,'2025-07-10 14:56:19');
+(161,16,99,'Waktu Sewa Akan Habis','Sewa sepeda akan berakhir dalam 30 menit. Mohon segera kembalikan untuk menghindari denda.','warning',0,'2025-07-10 16:16:15');
 
 /*Table structure for table `products` */
 
@@ -213,8 +83,8 @@ CREATE TABLE `products` (
 /*Data for the table `products` */
 
 insert  into `products`(`id`,`category_id`,`name`,`image`,`description`,`price`,`stock`,`stock_available`,`stock_rented`,`stock_damaged`,`stock_lost`,`status`,`created_at`) values 
-(8,8,'bike','uploads/products/1747363751148-467040440.jpg','bagus',20000.00,36,36,0,0,0,'tersedia','2025-05-01 19:06:00'),
-(17,8,'qq','uploads/products/1752025720378-602022416.jpg','qq',11.00,18,17,1,0,0,'tersedia','2025-05-08 22:18:24');
+(8,8,'bike','uploads/products/1747363751148-467040440.jpg','bagus',20000.00,35,35,0,0,0,'tersedia','2025-05-01 19:06:00'),
+(17,8,'sepeda','uploads/products/1752025720378-602022416.jpg','sepeda gunung murah',10000.00,20,18,2,0,0,'tersedia','2025-05-08 22:18:24');
 
 /*Table structure for table `rental_reports` */
 
@@ -268,12 +138,13 @@ CREATE TABLE `rentals` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `rentals_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   CONSTRAINT `rentals_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `rentals` */
 
 insert  into `rentals`(`id`,`product_id`,`user_id`,`customer_name`,`rental_hours`,`start_time`,`end_time`,`total_amount`,`penalty_amount`,`damage_penalty`,`lost_penalty`,`status`,`return_time`,`damage_notes`,`damage_proof`,`created_at`,`payment_status`,`payment_token`,`payment_url`,`payment_method`,`penalty_payment_status`,`penalty_payment_token`,`penalty_payment_url`) values 
-(96,17,16,'frank',1,'2025-07-09 19:20:20','2025-07-09 20:20:20',11.00,2453.00,0.00,0.00,'playing',NULL,NULL,NULL,'2025-07-09 19:43:19','paid','f2c7aa87-a01c-42e9-8b31-3dbb5d90e60d','https://app.sandbox.midtrans.com/snap/v4/redirection/f2c7aa87-a01c-42e9-8b31-3dbb5d90e60d','gopay','paid','026eb9a3-d88b-4592-a828-b14c1b4ee647','https://app.sandbox.midtrans.com/snap/v4/redirection/026eb9a3-d88b-4592-a828-b14c1b4ee647');
+(99,17,16,'frank',1,'2025-07-10 15:47:03','2025-07-10 16:47:03',10000.00,0.00,0.00,0.00,'playing',NULL,NULL,NULL,'2025-07-10 15:47:03','paid','ffd781b8-bf56-4181-8a01-b9922e3a34ad','https://app.sandbox.midtrans.com/snap/v4/redirection/ffd781b8-bf56-4181-8a01-b9922e3a34ad','gopay',NULL,NULL,NULL),
+(100,17,12,'2',1,'2025-07-10 15:57:35','2025-07-10 16:57:35',10000.00,0.00,0.00,0.00,'playing',NULL,NULL,NULL,'2025-07-10 15:57:35','paid','ce52e17d-34aa-47f4-b94c-0afbb5a041a3','https://app.sandbox.midtrans.com/snap/v4/redirection/ce52e17d-34aa-47f4-b94c-0afbb5a041a3','gopay',NULL,NULL,NULL);
 
 /*Table structure for table `users` */
 

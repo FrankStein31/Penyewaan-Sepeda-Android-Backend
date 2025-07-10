@@ -232,31 +232,35 @@ const createRental = (req, res) => {
                     });
                 }
 
-                    // Update product status: status jadi 'disewa' hanya jika stok habis
-                    const newStock = product.stock - 1;
-                    const newStatus = newStock < 1 ? 'disewa' : 'tersedia';
-                    const updateProduct = 'UPDATE products SET status = ?, stock = ? WHERE id = ?';
-                    db.query(updateProduct, [newStatus, newStock, product_id], (err) => {
+                    // Update stock_available (stok tersedia), stock (total) tidak berubah
+                    const updateProduct = 'UPDATE products SET stock_available = stock_available - 1 WHERE id = ? AND stock_available > 0';
+                    db.query(updateProduct, [product_id], (err, result) => {
                         if (err) {
                             return res.status(500).json({
                                 status: false,
-                                message: 'Error updating product status',
+                                message: 'Error updating product stock_available',
                                 error: err
                             });
                         }
+                        if (result.affectedRows === 0) {
+                            return res.status(400).json({
+                                status: false,
+                                message: 'Stok tersedia habis, tidak bisa disewa'
+                            });
+                        }
 
-                return res.status(201).json({
-                    status: true,
-                    message: 'Rental berhasil dibuat',
-                    data: {
-                        id: results.insertId,
-                        product_id,
+                        return res.status(201).json({
+                            status: true,
+                            message: 'Rental berhasil dibuat',
+                            data: {
+                                id: results.insertId,
+                                product_id,
                                 user_id,
-                        rental_hours,
-                        start_time: startTime,
-                        end_time: endTime,
+                                rental_hours,
+                                start_time: startTime,
+                                end_time: endTime,
                                 total_amount: totalAmount
-                    }
+                            }
                         });
                     });
                 });
@@ -313,13 +317,12 @@ const returnRental = (req, res) => {
             });
         }
 
-            // Hitung denda keterlambatan (per 5 menit)
+            // Hitung denda keterlambatan (per menit)
             const endTime = new Date(rental.end_time);
             let penaltyAmount = 0;
             if (returnTime > endTime) {
                 const diffMinutes = Math.ceil((returnTime - endTime) / (1000 * 60));
-                const penaltyIntervals = Math.ceil(diffMinutes / 5);
-                penaltyAmount = penaltyIntervals * rental.price; // Denda per 5 menit = harga sewa normal
+                penaltyAmount = diffMinutes * 1000; // Denda per menit = Rp1.000
             }
 
             // Set status dan denda berdasarkan kondisi

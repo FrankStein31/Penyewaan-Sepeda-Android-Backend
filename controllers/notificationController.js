@@ -67,8 +67,7 @@ const checkLateRentalNotifications = () => {
         }
 
         results.forEach(rental => {
-            const penaltyIntervals = Math.ceil(rental.late_minutes / 5);
-            const penaltyAmount = penaltyIntervals * rental.price;
+            const penaltyAmount = rental.late_minutes * 1000; // Rp1.000 per menit
 
             const notification = {
                 user_id: rental.user_id,
