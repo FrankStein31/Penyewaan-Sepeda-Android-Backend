@@ -47,6 +47,9 @@ const getAllRentals = (req, res) => {
             p.status as product_status,
             u.username as user_name,
             u.phone as user_phone,
+            u.nik as user_nik,
+            u.address as user_address,
+            u.ktp_image as user_ktp_image,
             CASE 
                 WHEN r.status = 'playing' THEN 
                     TIMESTAMPDIFF(MINUTE, CURRENT_TIMESTAMP, r.end_time)
@@ -97,6 +100,9 @@ const getRentalById = (req, res) => {
             p.status as product_status,
             u.username as user_name,
             u.phone as user_phone,
+            u.nik as user_nik,
+            u.address as user_address,
+            u.ktp_image as user_ktp_image,
             CASE 
                 WHEN r.status = 'playing' THEN 
                     TIMESTAMPDIFF(MINUTE, CURRENT_TIMESTAMP, r.end_time)
@@ -583,6 +589,27 @@ const getRentalsByUserId = (req, res) => {
     });
 };
 
+// Ambil detail rental by id, join ke users
+const getRentalDetail = (req, res) => {
+  const rentalId = req.params.id;
+  const query = `
+    SELECT r.*, p.name AS product_name, u.username, u.phone, u.nik, u.address, u.ktp_image, u.level
+    FROM rentals r
+    JOIN products p ON r.product_id = p.id
+    JOIN users u ON r.user_id = u.id
+    WHERE r.id = ?
+  `;
+  db.query(query, [rentalId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ status: false, message: 'Error database', error: err });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ status: false, message: 'Rental tidak ditemukan' });
+    }
+    return res.json({ status: true, data: results[0] });
+  });
+};
+
 module.exports = {
     getAllRentals,
     getRentalById,
@@ -591,5 +618,6 @@ module.exports = {
     getRentalReports,
     getUserNotifications,
     markNotificationRead,
-    getRentalsByUserId
+    getRentalsByUserId,
+    getRentalDetail
 }; 

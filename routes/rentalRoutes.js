@@ -9,7 +9,8 @@ const {
     getRentalReports,
     getUserNotifications,
     markNotificationRead,
-    getRentalsByUserId
+    getRentalsByUserId,
+    getRentalDetail
 } = require('../controllers/rentalController');
 
 router.get('/rentals', getAllRentals);
@@ -20,6 +21,7 @@ router.get('/rental-reports', getRentalReports);
 router.get('/notifications/user/:user_id', getUserNotifications);
 router.put('/notifications/:id/read', markNotificationRead);
 router.get('/rentals/user/:user_id', getRentalsByUserId);
+router.get('/rentals/:id', getRentalDetail);
 
 // Serve damage proof images
 router.use('/uploads/damage_proofs', express.static(path.join(__dirname, '../uploads/damage_proofs')));
