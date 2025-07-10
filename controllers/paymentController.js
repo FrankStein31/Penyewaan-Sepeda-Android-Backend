@@ -407,7 +407,7 @@ const createPenaltyPayment = (req, res) => {
 
         const rental = results[0];
 
-        // Cek apakah ada denda
+        // Pada endpoint createPenaltyPayment, sudah dicek jika penalty_amount == 0 maka return error, frontend bisa handle label 'Tidak Ada Denda'
         if (!rental.penalty_amount || rental.penalty_amount === 0) {
             return res.status(400).json({
                 status: false,
