@@ -249,7 +249,7 @@ const deleteProduct = (req, res) => {
             });
         }
 
-        const query = 'DELETE FROM products WHERE id = ?';
+    const query = 'DELETE FROM products WHERE id = ?';
     db.query(query, [id], (err, results) => {
         if (err) {
             return res.status(500).json({
@@ -334,10 +334,10 @@ const updateProductStatus = (req, res) => {
         switch(status) {
             case 'tersedia':
                 if (quantity > totalStock) {
-                    return res.status(400).json({
-                        status: false,
+                return res.status(400).json({
+                    status: false,
                         message: 'Jumlah melebihi total stok'
-                    });
+                });
                 }
                 newStockStatus.available = quantity;
                 break;
@@ -359,11 +359,11 @@ const updateProductStatus = (req, res) => {
         // Validasi total stok setelah perubahan
         const newTotalStock = Object.values(newStockStatus).reduce((a, b) => a + b, 0);
         if (newTotalStock > totalStock) {
-            return res.status(400).json({
-                status: false,
+                return res.status(400).json({
+                    status: false,
                 message: 'Total stok setelah perubahan melebihi stok awal'
-            });
-        }
+                });
+            }
 
         // Update database
         const updateQuery = `
@@ -373,7 +373,7 @@ const updateProductStatus = (req, res) => {
                 stock_lost = ?
             WHERE id = ?
         `;
-
+            
         db.query(
             updateQuery, 
             [

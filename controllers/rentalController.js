@@ -41,6 +41,7 @@ const getAllRentals = (req, res) => {
             r.damage_penalty,
             r.lost_penalty,
             r.payment_status,
+            r.penalty_payment_status,
             r.damage_notes,
             r.damage_proof,
             p.name as product_name,
@@ -94,6 +95,7 @@ const getRentalById = (req, res) => {
             r.damage_penalty,
             r.lost_penalty,
             r.payment_status,
+            r.penalty_payment_status,
             r.damage_notes,
             r.damage_proof,
             p.name as product_name,
@@ -176,14 +178,14 @@ const createRental = (req, res) => {
 
         // Cek product exists dan status
         const checkProduct = 'SELECT id, price, stock, status FROM products WHERE id = ?';
-        db.query(checkProduct, [product_id], (err, results) => {
-            if (err) {
-                return res.status(500).json({
-                    status: false,
-                    message: 'Error database',
-                    error: err
-                });
-            }
+    db.query(checkProduct, [product_id], (err, results) => {
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                message: 'Error database',
+                error: err
+            });
+        }
 
         if (results.length === 0) {
             return res.status(404).json({
@@ -255,18 +257,18 @@ const createRental = (req, res) => {
                             });
                         }
 
-                        return res.status(201).json({
-                            status: true,
-                            message: 'Rental berhasil dibuat',
-                            data: {
-                                id: results.insertId,
-                                product_id,
+                return res.status(201).json({
+                    status: true,
+                    message: 'Rental berhasil dibuat',
+                    data: {
+                        id: results.insertId,
+                        product_id,
                                 user_id,
-                                rental_hours,
-                                start_time: startTime,
-                                end_time: endTime,
+                        rental_hours,
+                        start_time: startTime,
+                        end_time: endTime,
                                 total_amount: totalAmount
-                            }
+                    }
                         });
                     });
                 });
@@ -564,6 +566,7 @@ const getRentalsByUserId = (req, res) => {
             r.damage_penalty,
             r.lost_penalty,
             r.payment_status,
+            r.penalty_payment_status,
             r.damage_notes,
             r.damage_proof,
             p.name as product_name,
@@ -607,7 +610,7 @@ const getRentalDetail = (req, res) => {
       return res.status(404).json({ status: false, message: 'Rental tidak ditemukan' });
     }
     return res.json({ status: true, data: results[0] });
-  });
+    });
 };
 
 module.exports = {
