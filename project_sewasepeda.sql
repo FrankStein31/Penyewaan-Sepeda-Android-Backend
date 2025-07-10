@@ -50,7 +50,7 @@ CREATE TABLE `notifications` (
   KEY `rental_id` (`rental_id`),
   CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `notifications_ibfk_2` FOREIGN KEY (`rental_id`) REFERENCES `rentals` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=160 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `notifications` */
 
@@ -135,7 +135,57 @@ insert  into `notifications`(`id`,`user_id`,`rental_id`,`title`,`message`,`type`
 (106,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1003 menit. Denda: Rp2211','late',0,'2025-07-10 13:04:01'),
 (107,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1004 menit. Denda: Rp2211','late',0,'2025-07-10 13:05:01'),
 (108,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1008 menit. Denda: Rp2222','late',0,'2025-07-10 13:08:42'),
-(109,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1009 menit. Denda: Rp2222','late',0,'2025-07-10 13:09:42');
+(109,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1009 menit. Denda: Rp2222','late',0,'2025-07-10 13:09:42'),
+(110,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1043 menit. Denda: Rp2299','late',0,'2025-07-10 13:43:37'),
+(111,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1044 menit. Denda: Rp2299','late',0,'2025-07-10 13:44:37'),
+(112,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1045 menit. Denda: Rp2299','late',0,'2025-07-10 13:45:37'),
+(113,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1046 menit. Denda: Rp2310','late',0,'2025-07-10 13:46:37'),
+(114,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1047 menit. Denda: Rp2310','late',0,'2025-07-10 13:47:37'),
+(115,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1048 menit. Denda: Rp2310','late',0,'2025-07-10 13:48:37'),
+(116,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1049 menit. Denda: Rp2310','late',0,'2025-07-10 13:49:37'),
+(117,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1050 menit. Denda: Rp2310','late',0,'2025-07-10 13:50:48'),
+(118,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1051 menit. Denda: Rp2321','late',0,'2025-07-10 13:51:48'),
+(119,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1052 menit. Denda: Rp2321','late',0,'2025-07-10 13:52:48'),
+(120,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1053 menit. Denda: Rp2321','late',0,'2025-07-10 13:53:48'),
+(121,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1054 menit. Denda: Rp2321','late',0,'2025-07-10 13:54:48'),
+(122,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1055 menit. Denda: Rp2321','late',0,'2025-07-10 13:56:18'),
+(123,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1056 menit. Denda: Rp2332','late',0,'2025-07-10 13:57:17'),
+(124,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1057 menit. Denda: Rp2332','late',0,'2025-07-10 13:58:17'),
+(125,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1058 menit. Denda: Rp2332','late',0,'2025-07-10 13:59:17'),
+(126,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1059 menit. Denda: Rp2332','late',0,'2025-07-10 14:00:17'),
+(127,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1060 menit. Denda: Rp2332','late',0,'2025-07-10 14:01:17'),
+(128,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1061 menit. Denda: Rp2343','late',0,'2025-07-10 14:02:17'),
+(129,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1062 menit. Denda: Rp2343','late',0,'2025-07-10 14:03:17'),
+(130,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1063 menit. Denda: Rp2343','late',0,'2025-07-10 14:04:17'),
+(131,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1064 menit. Denda: Rp2343','late',0,'2025-07-10 14:05:17'),
+(132,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1065 menit. Denda: Rp2343','late',0,'2025-07-10 14:06:17'),
+(133,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1066 menit. Denda: Rp2354','late',0,'2025-07-10 14:07:17'),
+(134,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1067 menit. Denda: Rp2354','late',0,'2025-07-10 14:08:17'),
+(135,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1068 menit. Denda: Rp2354','late',0,'2025-07-10 14:09:17'),
+(136,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1069 menit. Denda: Rp2354','late',0,'2025-07-10 14:10:17'),
+(137,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1070 menit. Denda: Rp2354','late',0,'2025-07-10 14:11:17'),
+(138,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1071 menit. Denda: Rp2365','late',0,'2025-07-10 14:12:17'),
+(139,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1076 menit. Denda: Rp2376','late',0,'2025-07-10 14:16:55'),
+(140,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1077 menit. Denda: Rp2376','late',0,'2025-07-10 14:17:55'),
+(141,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1078 menit. Denda: Rp2376','late',0,'2025-07-10 14:18:55'),
+(142,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1079 menit. Denda: Rp2376','late',0,'2025-07-10 14:19:55'),
+(143,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1080 menit. Denda: Rp2376','late',0,'2025-07-10 14:20:55'),
+(144,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1081 menit. Denda: Rp2387','late',0,'2025-07-10 14:21:55'),
+(145,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1082 menit. Denda: Rp2387','late',0,'2025-07-10 14:22:55'),
+(146,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1102 menit. Denda: Rp2431','late',0,'2025-07-10 14:42:36'),
+(147,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1103 menit. Denda: Rp2431','late',0,'2025-07-10 14:43:36'),
+(148,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1104 menit. Denda: Rp2431','late',0,'2025-07-10 14:44:36'),
+(149,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1105 menit. Denda: Rp2431','late',0,'2025-07-10 14:45:36'),
+(150,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1106 menit. Denda: Rp2442','late',0,'2025-07-10 14:46:36'),
+(151,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1107 menit. Denda: Rp2442','late',0,'2025-07-10 14:47:36'),
+(152,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1108 menit. Denda: Rp2442','late',0,'2025-07-10 14:48:36'),
+(153,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1109 menit. Denda: Rp2442','late',0,'2025-07-10 14:49:36'),
+(154,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1110 menit. Denda: Rp2442','late',0,'2025-07-10 14:50:36'),
+(155,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1111 menit. Denda: Rp2453','late',0,'2025-07-10 14:51:36'),
+(156,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1112 menit. Denda: Rp2453','late',0,'2025-07-10 14:52:36'),
+(157,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1113 menit. Denda: Rp2453','late',0,'2025-07-10 14:53:36'),
+(158,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1114 menit. Denda: Rp2453','late',0,'2025-07-10 14:54:36'),
+(159,16,96,'Denda Keterlambatan','Anda terlambat mengembalikan qq selama 1115 menit. Denda: Rp2453','late',0,'2025-07-10 14:56:19');
 
 /*Table structure for table `products` */
 
@@ -149,6 +199,10 @@ CREATE TABLE `products` (
   `description` text,
   `price` decimal(10,2) NOT NULL,
   `stock` int NOT NULL DEFAULT '0',
+  `stock_available` int NOT NULL DEFAULT '0',
+  `stock_rented` int NOT NULL DEFAULT '0',
+  `stock_damaged` int NOT NULL DEFAULT '0',
+  `stock_lost` int NOT NULL DEFAULT '0',
   `status` enum('tersedia','disewa','rusak','hilang') NOT NULL DEFAULT 'tersedia',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -158,9 +212,9 @@ CREATE TABLE `products` (
 
 /*Data for the table `products` */
 
-insert  into `products`(`id`,`category_id`,`name`,`image`,`description`,`price`,`stock`,`status`,`created_at`) values 
-(8,8,'bike','uploads/products/1747363751148-467040440.jpg','bagus',20000.00,36,'tersedia','2025-05-01 19:06:00'),
-(17,8,'qq','uploads/products/1752025720378-602022416.jpg','qq',11.00,18,'tersedia','2025-05-08 22:18:24');
+insert  into `products`(`id`,`category_id`,`name`,`image`,`description`,`price`,`stock`,`stock_available`,`stock_rented`,`stock_damaged`,`stock_lost`,`status`,`created_at`) values 
+(8,8,'bike','uploads/products/1747363751148-467040440.jpg','bagus',20000.00,36,36,0,0,0,'tersedia','2025-05-01 19:06:00'),
+(17,8,'qq','uploads/products/1752025720378-602022416.jpg','qq',11.00,18,17,1,0,0,'tersedia','2025-05-08 22:18:24');
 
 /*Table structure for table `rental_reports` */
 
@@ -219,7 +273,7 @@ CREATE TABLE `rentals` (
 /*Data for the table `rentals` */
 
 insert  into `rentals`(`id`,`product_id`,`user_id`,`customer_name`,`rental_hours`,`start_time`,`end_time`,`total_amount`,`penalty_amount`,`damage_penalty`,`lost_penalty`,`status`,`return_time`,`damage_notes`,`damage_proof`,`created_at`,`payment_status`,`payment_token`,`payment_url`,`payment_method`,`penalty_payment_status`,`penalty_payment_token`,`penalty_payment_url`) values 
-(96,17,16,'frank',1,'2025-07-09 19:20:20','2025-07-09 20:20:20',11.00,2222.00,0.00,0.00,'playing',NULL,NULL,NULL,'2025-07-09 19:43:19','paid','f2c7aa87-a01c-42e9-8b31-3dbb5d90e60d','https://app.sandbox.midtrans.com/snap/v4/redirection/f2c7aa87-a01c-42e9-8b31-3dbb5d90e60d','gopay','paid','026eb9a3-d88b-4592-a828-b14c1b4ee647','https://app.sandbox.midtrans.com/snap/v4/redirection/026eb9a3-d88b-4592-a828-b14c1b4ee647');
+(96,17,16,'frank',1,'2025-07-09 19:20:20','2025-07-09 20:20:20',11.00,2453.00,0.00,0.00,'playing',NULL,NULL,NULL,'2025-07-09 19:43:19','paid','f2c7aa87-a01c-42e9-8b31-3dbb5d90e60d','https://app.sandbox.midtrans.com/snap/v4/redirection/f2c7aa87-a01c-42e9-8b31-3dbb5d90e60d','gopay','paid','026eb9a3-d88b-4592-a828-b14c1b4ee647','https://app.sandbox.midtrans.com/snap/v4/redirection/026eb9a3-d88b-4592-a828-b14c1b4ee647');
 
 /*Table structure for table `users` */
 

@@ -300,16 +300,16 @@ const getBlacklistedUsers = (req, res) => {
     `;
 
     db.query(query, (err, results) => {
-        if (err) {
-            return res.status(500).json({
-                status: false,
-                message: 'Error database',
-                error: err
-            });
-        }
+            if (err) {
+                return res.status(500).json({
+                    status: false,
+                    message: 'Error database',
+                    error: err
+                });
+            }
 
-        return res.status(200).json({
-            status: true,
+            return res.status(200).json({
+                status: true,
             message: 'Data user blacklist berhasil diambil',
             data: results
         });

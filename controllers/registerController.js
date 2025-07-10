@@ -36,8 +36,8 @@ const register = (req, res) => {
                 error: err.message
             });
         } else if (err) {
-            return res.status(400).json({
-                status: false,
+        return res.status(400).json({
+            status: false,
                 message: err.message
             });
         }
@@ -50,29 +50,29 @@ const register = (req, res) => {
 
         // Validasi input
         if (!username || !password || !phone || !address || !nik || !ktp_image) {
-            return res.status(400).json({
-                status: false,
+        return res.status(400).json({
+            status: false,
                 message: 'Semua field harus diisi'
-            });
-        }
+        });
+    }
 
         // Cek username exists
         const checkUsername = 'SELECT username FROM users WHERE username = ?';
         db.query(checkUsername, [username], (err, results) => {
-            if (err) {
-                return res.status(500).json({
-                    status: false,
-                    message: 'Error database',
-                    error: err
-                });
-            }
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                message: 'Error database',
+                error: err
+            });
+        }
 
-            if (results.length > 0) {
-                return res.status(400).json({
-                    status: false,
-                    message: 'Username sudah digunakan'
-                });
-            }
+        if (results.length > 0) {
+            return res.status(400).json({
+                status: false,
+                message: 'Username sudah digunakan'
+            });
+        }
 
             // Insert user baru
             const insertQuery = `
@@ -82,26 +82,26 @@ const register = (req, res) => {
             `;
             
             db.query(insertQuery, [username, password, phone, address, nik, ktp_image], (err, results) => {
-                if (err) {
-                    return res.status(500).json({
-                        status: false,
-                        message: 'Error database',
-                        error: err
-                    });
-                }
+            if (err) {
+                return res.status(500).json({
+                    status: false,
+                    message: 'Error database',
+                    error: err
+                });
+            }
 
-                return res.status(201).json({
-                    status: true,
-                    message: 'Registrasi berhasil',
-                    data: {
-                        id: results.insertId,
-                        username,
+            return res.status(201).json({
+                status: true,
+                message: 'Registrasi berhasil',
+                data: {
+                    id: results.insertId,
+                    username,
                         phone,
                         address,
                         nik,
                         ktp_image,
                         level: 'user'
-                    }
+                }
                 });
             });
         });

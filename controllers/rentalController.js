@@ -66,11 +66,11 @@ const getAllRentals = (req, res) => {
                 error: err
             });
         }
-        return res.status(200).json({
-            status: true,
-            message: 'Data rental berhasil diambil',
+                return res.status(200).json({
+                    status: true,
+                    message: 'Data rental berhasil diambil',
             data: results
-        });
+            });
     });
 };
 
@@ -124,11 +124,11 @@ const getRentalById = (req, res) => {
             });
         }
 
-        return res.status(200).json({
-            status: true,
-            message: 'Data rental berhasil diambil',
+                    return res.status(200).json({
+                        status: true,
+                        message: 'Data rental berhasil diambil',
             data: results[0]
-        });
+            });
     });
 };
 
@@ -179,14 +179,14 @@ const createRental = (req, res) => {
                 });
             }
 
-            if (results.length === 0) {
-                return res.status(404).json({
-                    status: false,
-                    message: 'Produk tidak ditemukan'
-                });
-            }
+        if (results.length === 0) {
+            return res.status(404).json({
+                status: false,
+                message: 'Produk tidak ditemukan'
+            });
+        }
 
-            const product = results[0];
+        const product = results[0];
             if (product.status !== 'tersedia') {
                 return res.status(400).json({
                     status: false,
@@ -195,11 +195,11 @@ const createRental = (req, res) => {
             }
 
             if (product.stock < 1) {
-                return res.status(400).json({
-                    status: false,
-                    message: 'Stok produk tidak tersedia'
-                });
-            }
+            return res.status(400).json({
+                status: false,
+                message: 'Stok produk tidak tersedia'
+            });
+        }
 
             // Ambil username user
             const getUser = 'SELECT username FROM users WHERE id = ?';
@@ -213,24 +213,24 @@ const createRental = (req, res) => {
                 }
                 const customer_name = userRows[0].username;
 
-                const startTime = new Date();
-                const endTime = new Date(startTime.getTime() + (rental_hours * 60 * 60 * 1000));
-                const totalAmount = product.price * rental_hours;
+        const startTime = new Date();
+        const endTime = new Date(startTime.getTime() + (rental_hours * 60 * 60 * 1000));
+        const totalAmount = product.price * rental_hours;
 
                 // Insert rental (isi customer_name)
-                const insertQuery = `
-                    INSERT INTO rentals 
+        const insertQuery = `
+            INSERT INTO rentals 
                     (product_id, user_id, customer_name, rental_hours, start_time, end_time, total_amount, status, payment_status) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, 'playing', 'pending')
-                `;
+        `;
                 db.query(insertQuery, [product_id, user_id, customer_name, rental_hours, startTime, endTime, totalAmount], (err, results) => {
-                    if (err) {
-                        return res.status(500).json({
-                            status: false,
-                            message: 'Error database',
-                            error: err
-                        });
-                    }
+                if (err) {
+                    return res.status(500).json({
+                        status: false,
+                        message: 'Error database',
+                        error: err
+                    });
+                }
 
                     // Update product status: status jadi 'disewa' hanya jika stok habis
                     const newStock = product.stock - 1;
@@ -245,18 +245,18 @@ const createRental = (req, res) => {
                             });
                         }
 
-                        return res.status(201).json({
-                            status: true,
-                            message: 'Rental berhasil dibuat',
-                            data: {
-                                id: results.insertId,
-                                product_id,
+                return res.status(201).json({
+                    status: true,
+                    message: 'Rental berhasil dibuat',
+                    data: {
+                        id: results.insertId,
+                        product_id,
                                 user_id,
-                                rental_hours,
-                                start_time: startTime,
-                                end_time: endTime,
+                        rental_hours,
+                        start_time: startTime,
+                        end_time: endTime,
                                 total_amount: totalAmount
-                            }
+                    }
                         });
                     });
                 });
@@ -278,40 +278,40 @@ const returnRental = (req, res) => {
             });
         }
 
-        const returnTime = new Date();
+    const returnTime = new Date();
         const damage_proof = req.file ? req.file.path.replace(/\\/g, '/') : null;
 
-        // Get rental data
+    // Get rental data
         const getRental = `
             SELECT r.*, p.price 
-            FROM rentals r 
-            JOIN products p ON r.product_id = p.id 
-            WHERE r.id = ?
-        `;
+        FROM rentals r 
+        JOIN products p ON r.product_id = p.id 
+        WHERE r.id = ?
+    `;
 
         db.query(getRental, [id], (err, results) => {
-            if (err) {
-                return res.status(500).json({
-                    status: false,
-                    message: 'Error database',
-                    error: err
-                });
-            }
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                message: 'Error database',
+                error: err
+            });
+        }
 
-            if (results.length === 0) {
-                return res.status(404).json({
-                    status: false,
+        if (results.length === 0) {
+            return res.status(404).json({
+                status: false,
                     message: 'Rental tidak ditemukan'
-                });
-            }
+            });
+        }
 
-            const rental = results[0];
+        const rental = results[0];
             if (rental.status !== 'playing') {
-                return res.status(400).json({
-                    status: false,
+            return res.status(400).json({
+                status: false,
                     message: 'Rental sudah selesai'
-                });
-            }
+            });
+        }
 
             // Hitung denda keterlambatan (per 5 menit)
             const endTime = new Date(rental.end_time);
@@ -338,18 +338,18 @@ const returnRental = (req, res) => {
                 productNewStatus = 'hilang';
             }
 
-            // Update rental
+        // Update rental
             const updateRental = `
-                UPDATE rentals 
+            UPDATE rentals 
                 SET status = ?, 
-                    return_time = ?,
-                    penalty_amount = ?,
+                return_time = ?,
+                penalty_amount = ?,
                     damage_penalty = ?,
                     lost_penalty = ?,
                     damage_notes = ?,
                     damage_proof = ?
-                WHERE id = ?
-            `;
+            WHERE id = ?
+        `;
 
             db.query(updateRental, [
                 newStatus, 
@@ -467,16 +467,16 @@ const getRentalReports = (req, res) => {
     `;
 
     db.query(query, (err, results) => {
-        if (err) {
-            return res.status(500).json({
-                status: false,
-                message: 'Error database',
-                error: err
-            });
-        }
+            if (err) {
+                return res.status(500).json({
+                    status: false,
+                    message: 'Error database',
+                    error: err
+                });
+            }
 
-        return res.status(200).json({
-            status: true,
+            return res.status(200).json({
+                status: true,
             message: 'Data report berhasil diambil',
             data: results
         });
@@ -535,7 +535,7 @@ const markNotificationRead = (req, res) => {
         return res.status(200).json({
             status: true,
             message: 'Notifikasi berhasil ditandai telah dibaca'
-        });
+            });
     });
 };
 
@@ -565,15 +565,15 @@ const getRentalsByUserId = (req, res) => {
         ORDER BY r.created_at DESC
     `;
     db.query(query, [user_id], (err, results) => {
-        if (err) {
-            return res.status(500).json({
-                status: false,
-                message: 'Error database',
-                error: err
-            });
-        }
-        return res.status(200).json({
-            status: true,
+            if (err) {
+                return res.status(500).json({
+                    status: false,
+                    message: 'Error database',
+                    error: err
+                });
+            }
+            return res.status(200).json({
+                status: true,
             message: 'Data rental user berhasil diambil',
             data: results
         });
