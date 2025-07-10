@@ -7,7 +7,8 @@ const {
     createProduct,
     updateProduct,
     deleteProduct,
-    uploadProductPhoto
+    updateProductStatus,
+    getProductsByStatus
 } = require('../controllers/productController');
 
 router.get('/products', getAllProducts);
@@ -15,7 +16,8 @@ router.get('/products/:id', getProductById);
 router.post('/products', createProduct);
 router.put('/products/:id', updateProduct);
 router.delete('/products/:id', deleteProduct);
-router.post('/products/:id/upload-photo', uploadProductPhoto);
+router.put('/products/:id/status', updateProductStatus);
+router.get('/products/status/:status', getProductsByStatus);
 
 // Serve product images
 router.use('/uploads/products', express.static(path.join(__dirname, '../uploads/products')));

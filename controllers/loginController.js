@@ -26,10 +26,10 @@ const upload = multer({
     }
 }).single('ktp_image');
 
+// Login
 const login = (req, res) => {
     const { username, password } = req.body;
 
-    // Validasi input
     if (!username || !password) {
         return res.status(400).json({
             status: false,
@@ -37,7 +37,6 @@ const login = (req, res) => {
         });
     }
 
-    // Query ke database
     const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
     db.query(query, [username, password], (err, results) => {
         if (err) {
@@ -48,61 +47,44 @@ const login = (req, res) => {
             });
         }
 
-        // Cek hasil query
-        if (results.length > 0) {
-            return res.status(200).json({
-                status: true,
-                message: 'Login berhasil',
-                data: {
-                    id: results[0].id,
-                    username: results[0].username,
-                    level: results[0].level,
-                    phone: results[0].phone,
-                    nik: results[0].nik,
-                    ktp_image: results[0].ktp_image,
-                    address: results[0].address,
-                    isAdmin: results[0].level === 'admin'
-                }
-            });
-        } else {
+        if (results.length === 0) {
             return res.status(401).json({
                 status: false,
                 message: 'Username atau password salah'
             });
         }
-    });
-};
 
-// Tambah fungsi untuk mendapatkan semua user (hanya bisa diakses admin)
-const getAllUsers = (req, res) => {
-    const query = 'SELECT id, username, level, phone, nik, ktp_image, address, created_at FROM users';
-    db.query(query, (err, results) => {
-        if (err) {
-            return res.status(500).json({
+        const user = results[0];
+        if (user.is_blacklisted) {
+            return res.status(403).json({
                 status: false,
-                message: 'Error database',
-                error: err
+                message: 'Akun Anda telah di-blacklist',
+                blacklist_reason: user.blacklist_reason,
+                blacklist_date: user.blacklist_date
             });
         }
+
         return res.status(200).json({
             status: true,
-            message: 'Data users berhasil diambil',
-            data: results
+            message: 'Login berhasil',
+            data: {
+                id: user.id,
+                username: user.username,
+                level: user.level,
+                phone: user.phone,
+                nik: user.nik,
+                ktp_image: user.ktp_image,
+                address: user.address
+            }
         });
     });
 };
 
+// Get user by ID
 const getUserById = (req, res) => {
     const { id } = req.params;
 
-    if (!id) {
-        return res.status(400).json({
-            status: false,
-            message: 'ID harus diisi'
-        });
-    }
-
-    const query = 'SELECT id, username, level, phone, nik, ktp_image, address, created_at FROM users WHERE id = ?';
+    const query = 'SELECT * FROM users WHERE id = ?';
     db.query(query, [id], (err, results) => {
         if (err) {
             return res.status(500).json({
@@ -119,73 +101,30 @@ const getUserById = (req, res) => {
             });
         }
 
+        const user = results[0];
         return res.status(200).json({
             status: true,
             message: 'Data user berhasil diambil',
-            data: results[0]
-        });
-    });
-};
-
-const updatePassword = (req, res) => {
-    const { id } = req.params;
-    const { currentPassword, newPassword } = req.body;
-
-    // Validasi input
-    if (!currentPassword || !newPassword) {
-        return res.status(400).json({
-            status: false,
-            message: 'Password lama dan password baru harus diisi'
-        });
-    }
-
-    // Cek password lama
-    const checkQuery = 'SELECT * FROM users WHERE id = ? AND password = ?';
-    db.query(checkQuery, [id, currentPassword], (err, results) => {
-        if (err) {
-            return res.status(500).json({
-                status: false,
-                message: 'Error database',
-                error: err
-            });
-        }
-
-        if (results.length === 0) {
-            return res.status(401).json({
-                status: false,
-                message: 'Password lama tidak sesuai'
-            });
-        }
-
-        // Update password baru
-        const updateQuery = 'UPDATE users SET password = ? WHERE id = ?';
-        db.query(updateQuery, [newPassword, id], (err, results) => {
-            if (err) {
-                return res.status(500).json({
-                    status: false,
-                    message: 'Error database',
-                    error: err
-                });
+            data: {
+                id: user.id,
+                username: user.username,
+                level: user.level,
+                phone: user.phone,
+                nik: user.nik,
+                ktp_image: user.ktp_image,
+                address: user.address,
+                is_blacklisted: user.is_blacklisted,
+                blacklist_reason: user.blacklist_reason,
+                blacklist_date: user.blacklist_date
             }
-
-            return res.status(200).json({
-                status: true,
-                message: 'Password berhasil diupdate'
-            });
         });
     });
 };
 
-// Tambah fungsi untuk update profile
+// Update profile
 const updateProfile = (req, res) => {
-    upload(req, res, (err) => {
-        if (err instanceof multer.MulterError) {
-            return res.status(400).json({
-                status: false,
-                message: 'Error saat upload file',
-                error: err.message
-            });
-        } else if (err) {
+    upload(req, res, async (err) => {
+        if (err) {
             return res.status(400).json({
                 status: false,
                 message: err.message
@@ -193,31 +132,24 @@ const updateProfile = (req, res) => {
         }
 
         const { id } = req.params;
-        const { phone, address, nik } = req.body;
+        const { phone, nik, address } = req.body;
         const ktp_image = req.file ? req.file.path.replace(/\\/g, '/') : null;
 
-        // Validasi input
-        if (!phone || !address || !nik) {
+        let updateFields = {};
+        if (phone) updateFields.phone = phone;
+        if (nik) updateFields.nik = nik;
+        if (address) updateFields.address = address;
+        if (ktp_image) updateFields.ktp_image = ktp_image;
+
+        if (Object.keys(updateFields).length === 0) {
             return res.status(400).json({
                 status: false,
-                message: 'Nomor HP, alamat, dan NIK harus diisi'
+                message: 'Tidak ada data yang diupdate'
             });
         }
 
-        // Update profile
-        let updateQuery = 'UPDATE users SET phone = ?, address = ?, nik = ?';
-        let queryParams = [phone, address, nik];
-
-        // Jika ada file KTP baru
-        if (ktp_image) {
-            updateQuery += ', ktp_image = ?';
-            queryParams.push(ktp_image);
-        }
-
-        updateQuery += ' WHERE id = ?';
-        queryParams.push(id);
-
-        db.query(updateQuery, queryParams, (err, results) => {
+        const query = 'UPDATE users SET ? WHERE id = ?';
+        db.query(query, [updateFields, id], (err, results) => {
             if (err) {
                 return res.status(500).json({
                     status: false,
@@ -238,20 +170,177 @@ const updateProfile = (req, res) => {
                 message: 'Profile berhasil diupdate',
                 data: {
                     id: parseInt(id),
-                    phone,
-                    address,
-                    nik,
-                    ktp_image: ktp_image || undefined
+                    ...updateFields
                 }
             });
         });
     });
 };
 
+// Blacklist user
+const blacklistUser = (req, res) => {
+    const { id } = req.params;
+    const { reason } = req.body;
+
+    if (!reason) {
+        return res.status(400).json({
+            status: false,
+            message: 'Alasan blacklist harus diisi'
+        });
+    }
+
+    const query = `
+        UPDATE users 
+        SET is_blacklisted = 1,
+            blacklist_reason = ?,
+            blacklist_date = CURRENT_TIMESTAMP
+        WHERE id = ?
+    `;
+
+    db.query(query, [reason, id], (err, results) => {
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                message: 'Error database',
+                error: err
+            });
+        }
+
+        if (results.affectedRows === 0) {
+            return res.status(404).json({
+                status: false,
+                message: 'User tidak ditemukan'
+            });
+        }
+
+        // Create notification for user
+        const notification = {
+            user_id: id,
+            title: 'Akun Di-blacklist',
+            message: `Akun Anda telah di-blacklist dengan alasan: ${reason}`,
+            type: 'system'
+        };
+
+        const insertNotif = 'INSERT INTO notifications SET ?';
+        db.query(insertNotif, notification, (err) => {
+            if (err) {
+                console.error('Error creating blacklist notification:', err);
+            }
+        });
+
+        return res.status(200).json({
+            status: true,
+            message: 'User berhasil di-blacklist',
+            data: {
+                id: parseInt(id),
+                reason,
+                blacklist_date: new Date()
+            }
+        });
+    });
+};
+
+// Remove user from blacklist
+const removeBlacklist = (req, res) => {
+    const { id } = req.params;
+
+    const query = `
+        UPDATE users 
+        SET is_blacklisted = 0,
+            blacklist_reason = NULL,
+            blacklist_date = NULL
+        WHERE id = ?
+    `;
+
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                message: 'Error database',
+                error: err
+            });
+        }
+
+        if (results.affectedRows === 0) {
+            return res.status(404).json({
+                status: false,
+                message: 'User tidak ditemukan'
+            });
+        }
+
+        // Create notification for user
+        const notification = {
+            user_id: id,
+            title: 'Blacklist Dihapus',
+            message: 'Akun Anda telah dihapus dari daftar blacklist',
+            type: 'system'
+        };
+
+        const insertNotif = 'INSERT INTO notifications SET ?';
+        db.query(insertNotif, notification, (err) => {
+            if (err) {
+                console.error('Error creating unblacklist notification:', err);
+            }
+        });
+
+        return res.status(200).json({
+            status: true,
+            message: 'User berhasil dihapus dari blacklist'
+        });
+    });
+};
+
+// Get blacklisted users
+const getBlacklistedUsers = (req, res) => {
+    const query = `
+        SELECT id, username, phone, nik, address, blacklist_reason, blacklist_date
+        FROM users
+        WHERE is_blacklisted = 1
+        ORDER BY blacklist_date DESC
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                message: 'Error database',
+                error: err
+            });
+        }
+
+        return res.status(200).json({
+            status: true,
+            message: 'Data user blacklist berhasil diambil',
+            data: results
+        });
+    });
+};
+
+// Get all users
+const getAllUsers = (req, res) => {
+    const query = 'SELECT id, username, level, phone, nik, ktp_image, address, is_blacklisted, blacklist_reason, blacklist_date, created_at FROM users ORDER BY created_at DESC';
+    db.query(query, (err, results) => {
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                message: 'Error database',
+                error: err
+            });
+        }
+        return res.status(200).json({
+            status: true,
+            message: 'Data user berhasil diambil',
+            data: results
+        });
+    });
+};
+
 module.exports = {
     login,
-    getAllUsers,
     getUserById,
-    updatePassword,
-    updateProfile
+    updateProfile,
+    blacklistUser,
+    removeBlacklist,
+    getBlacklistedUsers,
+    getAllUsers
 };

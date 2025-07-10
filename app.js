@@ -12,6 +12,11 @@ const productRoutes = require('./routes/productRoutes');
 const rentalRoutes = require('./routes/rentalRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const simulationRoutes = require('./routes/simulationRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
+const { 
+    checkRentalTimeNotifications, 
+    checkLateRentalNotifications 
+} = require('./controllers/notificationController');
 
 // Middleware untuk CORS
 app.use(cors());
@@ -24,6 +29,7 @@ const fs = require('fs');
 const uploadDir = path.join(__dirname, 'uploads');
 const ktpDir = path.join(uploadDir, 'ktp');
 const productsDir = path.join(uploadDir, 'products');
+const damageProofsDir = path.join(uploadDir, 'damage_proofs');
 
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
@@ -33,6 +39,9 @@ if (!fs.existsSync(ktpDir)) {
 }
 if (!fs.existsSync(productsDir)) {
     fs.mkdirSync(productsDir);
+}
+if (!fs.existsSync(damageProofsDir)) {
+    fs.mkdirSync(damageProofsDir);
 }
 
 // Middleware untuk serve static files
@@ -47,6 +56,11 @@ app.use('/api', productRoutes);
 app.use('/api', rentalRoutes);
 app.use('/api', paymentRoutes);
 app.use('/api', simulationRoutes);
+app.use('/api', notificationRoutes);
+
+// Scheduler untuk notifikasi
+setInterval(checkRentalTimeNotifications, 60000); // Check setiap 1 menit
+setInterval(checkLateRentalNotifications, 60000); // Check setiap 1 menit
 
 app.listen(port, () => {
     console.log(`Server berjalan di port ${port}`);
