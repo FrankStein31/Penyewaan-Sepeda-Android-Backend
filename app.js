@@ -30,6 +30,7 @@ const uploadDir = path.join(__dirname, 'uploads');
 const ktpDir = path.join(uploadDir, 'ktp');
 const productsDir = path.join(uploadDir, 'products');
 const damageProofsDir = path.join(uploadDir, 'damage_proofs');
+const profileDir = path.join(uploadDir, 'profile');
 
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
@@ -42,6 +43,9 @@ if (!fs.existsSync(productsDir)) {
 }
 if (!fs.existsSync(damageProofsDir)) {
     fs.mkdirSync(damageProofsDir);
+}
+if (!fs.existsSync(profileDir)) {
+    fs.mkdirSync(profileDir);
 }
 
 // Middleware untuk serve static files

@@ -51,6 +51,7 @@ const getAllRentals = (req, res) => {
             u.nik as user_nik,
             u.address as user_address,
             u.ktp_image as user_ktp_image,
+            u.profile_image as user_profile_image,
             CASE 
                 WHEN r.status = 'playing' THEN 
                     TIMESTAMPDIFF(MINUTE, CURRENT_TIMESTAMP, r.end_time)
@@ -105,6 +106,7 @@ const getRentalById = (req, res) => {
             u.nik as user_nik,
             u.address as user_address,
             u.ktp_image as user_ktp_image,
+            u.profile_image as user_profile_image,
             CASE 
                 WHEN r.status = 'playing' THEN 
                     TIMESTAMPDIFF(MINUTE, CURRENT_TIMESTAMP, r.end_time)
