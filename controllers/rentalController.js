@@ -31,6 +31,9 @@ const getAllRentals = (req, res) => {
     const query = `
         SELECT 
             r.id,
+            r.product_id,
+            r.user_id,
+            r.customer_name,
             r.rental_hours,
             r.start_time,
             r.end_time,
@@ -44,6 +47,7 @@ const getAllRentals = (req, res) => {
             r.penalty_payment_status,
             r.damage_notes,
             r.damage_proof,
+            r.serial_number,
             p.name as product_name,
             p.status as product_status,
             u.username as user_name,
@@ -99,6 +103,7 @@ const getRentalById = (req, res) => {
             r.penalty_payment_status,
             r.damage_notes,
             r.damage_proof,
+            r.serial_number,
             p.name as product_name,
             p.status as product_status,
             u.username as user_name,
@@ -179,7 +184,7 @@ const createRental = (req, res) => {
         }
 
         // Cek product exists dan status
-        const checkProduct = 'SELECT id, price, stock, status FROM products WHERE id = ?';
+        const checkProduct = 'SELECT id, price, stock, status, serial_number FROM products WHERE id = ?';
     db.query(checkProduct, [product_id], (err, results) => {
         if (err) {
             return res.status(500).json({
@@ -211,6 +216,11 @@ const createRental = (req, res) => {
             });
         }
 
+        // Validasi serial_number produk
+        if (!product.serial_number) {
+            console.log('Warning: Product ID', product_id, 'has no serial_number');
+        }
+
             // Ambil username user
             const getUser = 'SELECT username FROM users WHERE id = ?';
             db.query(getUser, [user_id], (err, userRows) => {
@@ -227,13 +237,24 @@ const createRental = (req, res) => {
         const endTime = new Date(startTime.getTime() + (rental_hours * 60 * 60 * 1000));
         const totalAmount = product.price * rental_hours;
 
-                // Insert rental (isi customer_name)
+        // Generate unique serial number for this rental
+        const timestamp = Date.now();
+        const randomSuffix = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+        
+        // Fallback jika product.serial_number null
+        const productSerial = product.serial_number || `PRODUCT-${product_id}`;
+        const rentalSerialNumber = `${productSerial}-${timestamp}-${randomSuffix}`;
+
+        console.log('Product serial:', product.serial_number);
+        console.log('Generated rental serial:', rentalSerialNumber);
+
+                // Insert rental (isi customer_name dan serial_number)
         const insertQuery = `
             INSERT INTO rentals 
-                    (product_id, user_id, customer_name, rental_hours, start_time, end_time, total_amount, status, payment_status) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, 'playing', 'pending')
+                    (product_id, user_id, customer_name, rental_hours, start_time, end_time, total_amount, status, payment_status, serial_number) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, 'playing', 'pending', ?)
         `;
-                db.query(insertQuery, [product_id, user_id, customer_name, rental_hours, startTime, endTime, totalAmount], (err, results) => {
+                db.query(insertQuery, [product_id, user_id, customer_name, rental_hours, startTime, endTime, totalAmount, rentalSerialNumber], (err, results) => {
                 if (err) {
                     return res.status(500).json({
                         status: false,
@@ -571,6 +592,7 @@ const getRentalsByUserId = (req, res) => {
             r.penalty_payment_status,
             r.damage_notes,
             r.damage_proof,
+            r.serial_number,
             p.name as product_name,
             p.status as product_status
         FROM rentals r
@@ -598,7 +620,7 @@ const getRentalsByUserId = (req, res) => {
 const getRentalDetail = (req, res) => {
   const rentalId = req.params.id;
   const query = `
-    SELECT r.*, p.name AS product_name, u.username, u.phone, u.nik, u.address, u.ktp_image, u.level
+    SELECT r.*, p.name AS product_name, p.serial_number as product_serial_number, u.username, u.phone, u.nik, u.address, u.ktp_image, u.level
     FROM rentals r
     JOIN products p ON r.product_id = p.id
     JOIN users u ON r.user_id = u.id
