@@ -391,6 +391,106 @@ const updateProductStatus = (req, res) => {
                     });
                 }
 
+                // Jika status rusak atau hilang, hitung denda untuk rental aktif
+                if (status === 'rusak' || status === 'hilang') {
+                    const getActiveRentals = `
+                        SELECT r.id, r.total_amount, p.price, r.user_id
+                        FROM rentals r
+                        JOIN products p ON r.product_id = p.id
+                        WHERE r.product_id = ? AND r.status = 'playing'
+                    `;
+
+                    db.query(getActiveRentals, [id], (err, rentalResults) => {
+                        if (err) {
+                            console.error('Error getting active rentals:', err);
+                            return;
+                        }
+
+                        rentalResults.forEach(rental => {
+                            let damageAmount = 0;
+                            let lostAmount = 0;
+                            let newRentalStatus = 'returned';
+
+                            if (status === 'rusak') {
+                                damageAmount = rental.price * 2; // Denda kerusakan = 2x harga sewa
+                                newRentalStatus = 'damaged';
+                            } else if (status === 'hilang') {
+                                lostAmount = rental.price * 10; // Denda kehilangan = 10x harga sewa
+                                newRentalStatus = 'lost';
+                            }
+
+                            // Update rental dengan denda
+                            const updateRental = `
+                                UPDATE rentals 
+                                SET status = ?,
+                                    damage_penalty = ?,
+                                    lost_penalty = ?,
+                                    return_time = NOW()
+                                WHERE id = ?
+                            `;
+
+                            db.query(updateRental, [
+                                newRentalStatus,
+                                damageAmount,
+                                lostAmount,
+                                rental.id
+                            ], (err) => {
+                                if (err) {
+                                    console.error('Error updating rental penalty:', err);
+                                } else {
+                                    console.log(`Updated rental ${rental.id} with ${status} penalty: damage=${damageAmount}, lost=${lostAmount}`);
+                                    
+                                    // Buat notifikasi untuk user
+                                    const notification = {
+                                        user_id: rental.user_id,
+                                        rental_id: rental.id,
+                                        title: status === 'rusak' ? 'Denda Kerusakan' : 'Denda Kehilangan',
+                                        message: status === 'rusak' 
+                                            ? `Sepeda mengalami kerusakan. Denda kerusakan: Rp${damageAmount}`
+                                            : `Sepeda hilang. Denda kehilangan: Rp${lostAmount}`,
+                                        type: 'damage'
+                                    };
+
+                                    const insertNotif = 'INSERT INTO notifications SET ?';
+                                    db.query(insertNotif, notification, (err) => {
+                                        if (err) {
+                                            console.error('Error creating damage/lost notification:', err);
+                                        } else {
+                                            console.log(`Created notification for rental ${rental.id}`);
+                                        }
+                                    });
+
+                                    // Tambahkan laporan denda ke tabel rental_reports
+                                    const reportType = status === 'rusak' ? 'damage' : 'lost';
+                                    const reportAmount = status === 'rusak' ? damageAmount : lostAmount;
+                                    const reportDescription = status === 'rusak' 
+                                        ? 'Denda kerusakan sepeda' 
+                                        : 'Denda kehilangan sepeda';
+
+                                    const insertReport = `
+                                        INSERT INTO rental_reports 
+                                        (rental_id, report_type, amount, description) 
+                                        VALUES (?, ?, ?, ?)
+                                    `;
+
+                                    db.query(insertReport, [
+                                        rental.id,
+                                        reportType,
+                                        reportAmount,
+                                        reportDescription
+                                    ], (err) => {
+                                        if (err) {
+                                            console.error('Error creating rental report:', err);
+                                        } else {
+                                            console.log(`Created rental report for ${reportType} penalty: Rp${reportAmount}`);
+                                        }
+                                    });
+                                }
+                            });
+                        });
+                    });
+                }
+
                 return res.status(200).json({
                     status: true,
                     message: 'Status dan stok produk berhasil diupdate',
