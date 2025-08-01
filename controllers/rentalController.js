@@ -637,6 +637,40 @@ const getRentalDetail = (req, res) => {
     });
 };
 
+// Stop penalty calculation
+const stopPenaltyCalculation = (req, res) => {
+    const { id } = req.params;
+
+    // Update penalty_payment_status menjadi pending untuk menghentikan perhitungan
+    const updateQuery = 'UPDATE rentals SET penalty_payment_status = "pending" WHERE id = ? AND status = "playing"';
+    
+    db.query(updateQuery, [id], (err, result) => {
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                message: 'Error database',
+                error: err
+            });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                status: false,
+                message: 'Rental tidak ditemukan atau sudah selesai'
+            });
+        }
+
+        return res.status(200).json({
+            status: true,
+            message: 'Perhitungan denda dihentikan',
+            data: {
+                rental_id: id,
+                penalty_payment_status: 'pending'
+            }
+        });
+    });
+};
+
 module.exports = {
     getAllRentals,
     getRentalById,
@@ -646,5 +680,6 @@ module.exports = {
     getUserNotifications,
     markNotificationRead,
     getRentalsByUserId,
-    getRentalDetail
+    getRentalDetail,
+    stopPenaltyCalculation
 }; 

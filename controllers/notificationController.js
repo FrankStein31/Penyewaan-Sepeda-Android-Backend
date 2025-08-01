@@ -53,11 +53,13 @@ const checkLateRentalNotifications = () => {
             r.end_time,
             p.name as product_name,
             p.price,
+            r.penalty_payment_status,
             TIMESTAMPDIFF(MINUTE, r.end_time, CURRENT_TIMESTAMP) as late_minutes
         FROM rentals r
         JOIN products p ON r.product_id = p.id
         WHERE r.status = 'playing'
         AND CURRENT_TIMESTAMP > r.end_time
+        AND (r.penalty_payment_status IS NULL OR r.penalty_payment_status = 'pending')
     `;
 
     db.query(query, (err, results) => {
@@ -67,6 +69,12 @@ const checkLateRentalNotifications = () => {
         }
 
         results.forEach(rental => {
+            // Hentikan perhitungan denda jika pembayaran sudah dimulai
+            if (rental.penalty_payment_status === 'paid') {
+                console.log(`Rental ${rental.id}: Denda sudah dibayar, skip perhitungan`);
+                return;
+            }
+
             const penaltyAmount = rental.late_minutes * 1000; // Rp1.000 per menit
 
             const notification = {
@@ -84,11 +92,13 @@ const checkLateRentalNotifications = () => {
                 }
             });
 
-            // Update denda di tabel rental
-            const updateRental = 'UPDATE rentals SET penalty_amount = ? WHERE id = ?';
+            // Update denda di tabel rental hanya jika belum dibayar
+            const updateRental = 'UPDATE rentals SET penalty_amount = ? WHERE id = ? AND (penalty_payment_status IS NULL OR penalty_payment_status = "pending")';
             db.query(updateRental, [penaltyAmount, rental.id], (err) => {
                 if (err) {
                     console.error('Error updating rental penalty:', err);
+                } else {
+                    console.log(`Updated penalty for rental ${rental.id}: Rp${penaltyAmount}`);
                 }
             });
         });

@@ -423,6 +423,16 @@ const createPenaltyPayment = (req, res) => {
             });
         }
 
+        // Set penalty_payment_status menjadi pending untuk menghentikan perhitungan denda
+        const updatePenaltyStatus = 'UPDATE rentals SET penalty_payment_status = "pending" WHERE id = ?';
+        db.query(updatePenaltyStatus, [rental_id], (err) => {
+            if (err) {
+                console.error('Error updating penalty payment status:', err);
+            } else {
+                console.log(`Set penalty_payment_status to pending for rental ${rental_id}`);
+            }
+        });
+
         // Determine payment method to use
         const selectedPaymentMethod = payment_method || rental.payment_method || 'credit_card';
         

@@ -10,7 +10,8 @@ const {
     getUserNotifications,
     markNotificationRead,
     getRentalsByUserId,
-    getRentalDetail
+    getRentalDetail,
+    stopPenaltyCalculation
 } = require('../controllers/rentalController');
 
 router.get('/rentals', getAllRentals);
@@ -22,6 +23,7 @@ router.get('/notifications/user/:user_id', getUserNotifications);
 router.put('/notifications/:id/read', markNotificationRead);
 router.get('/rentals/user/:user_id', getRentalsByUserId);
 router.get('/rentals/:id', getRentalDetail);
+router.post('/rentals/:id/stop-penalty', stopPenaltyCalculation);
 
 // Serve damage proof images
 router.use('/uploads/damage_proofs', express.static(path.join(__dirname, '../uploads/damage_proofs')));
